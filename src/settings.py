@@ -1,0 +1,28 @@
+# settings.py
+
+# Screen Settings
+SCREEN_WIDTH = 600
+SCREEN_HEIGHT = 600
+BG_COLOR = "black"
+TITLE = "My Snake Game"
+
+# Snake Settings
+STARTING_POSITIONS = [(0, 0), (-20, 0), (-40, 0)]
+MOVE_DISTANCE = 20
+UP = 90
+DOWN = 270
+LEFT = 180
+RIGHT = 0
+
+# Game Speed
+STARTING_SLEEP_DELAY = 0.1
+MINIMUM_SLEEP_DELAY = 0.05
+SPEED_INCREMENT = 0.01
+
+#Food point values
+POINT_SYSTEM = {
+    "apple": 1,
+    "banana": 3,
+    "cherry": 5,
+    "poison": -2
+}
