@@ -1,7 +1,7 @@
 from turtle import Turtle
 
 # Constants for setup
-from settings import *
+from src.settings import *
 
 
 class Snake:

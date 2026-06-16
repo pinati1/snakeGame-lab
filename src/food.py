@@ -1,17 +1,23 @@
 import glob
 import random
 from turtle import Turtle
-from settings import POINT_SYSTEM
+from src.settings import POINT_SYSTEM
 
-ALL_GIFS = glob.glob("../assets/food_gifs/*.gif")
-
+ALL_GIFS = glob.glob("assets/food_gifs/*.gif")
 
 
 class Food(Turtle):
-    def __init__(self):
+    # 1. Add 'screen' inside the parentheses
+    def __init__(self, screen):
         super().__init__()
         self.penup()
-        self.current_points = 1  # A safe default
+
+        # 2. Register all the shapes with the screen right away
+        if ALL_GIFS:
+            for gif in ALL_GIFS:
+                screen.addshape(gif)
+
+        self.current_points = 1
         self.refresh()
 
     def refresh(self):
