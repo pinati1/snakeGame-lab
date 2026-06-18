@@ -40,7 +40,7 @@ class Game:
             try:
     
                 self.screen.update()
-                time.sleep(0.01)  # Add this to slow the game down
+                time.sleep(0.04)  # Add this to slow the game down
                 self.snake.move()
             except Exception:
                 print("window closed")
