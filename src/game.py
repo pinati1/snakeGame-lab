@@ -4,6 +4,7 @@ from src.snake import Snake
 from src.food import Food
 import time
 
+
 class Game:
 
     def __init__(self):
@@ -36,6 +37,12 @@ class Game:
     def run(self):
         # self.food.refresh()
         while not self.stop:
-            self.screen.update()
-            time.sleep(0.01)  # Add this to slow the game down
-            self.snake.move()
+            try:
+    
+                self.screen.update()
+                time.sleep(0.01)  # Add this to slow the game down
+                self.snake.move()
+            except Exception:
+                print("window closed")
+                self.stop = True
+                break
