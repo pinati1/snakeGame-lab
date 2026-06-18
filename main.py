@@ -8,9 +8,9 @@ import time
 import turtle
 from turtle import Screen, Turtle
 
-from snake import Snake
-from food import Food
-from scoreboard import Scoreboard
+from src.snake import Snake
+from src.food import Food
+from src.scoreboard import Scoreboard
 
 # Speed control (sleep delay in seconds between movement steps).
 DELAY_START = 0.1
