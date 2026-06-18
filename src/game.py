@@ -12,9 +12,11 @@ class Game:
         self.screen.bgcolor(BG_COLOR)
         self.screen.setup(SCREEN_WIDTH, SCREEN_HEIGHT)
         self.screen.title("Snake")
+        self.screen.tracer(0)
         self.snake = Snake()
         self.food = Food(self.screen)
         self.setup_bindings()
+        self.pace = STARTING_SLEEP_DELAY
 
         self.stop = False
 
@@ -40,7 +42,7 @@ class Game:
             try:
     
                 self.screen.update()
-                time.sleep(0.04)  # Add this to slow the game down
+                time.sleep(self.pace)  # Add this to slow the game down
                 self.snake.move()
             except Exception:
                 print("window closed")
