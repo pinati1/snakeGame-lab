@@ -49,9 +49,11 @@ class Game:
     def run(self):
         while True:
             try:
+
                 self.screen.update()
                 time.sleep(self.pace)  # ← required sleep, kept
             except turtle.Terminator:
+
                 break  # window closed → leave the loop
 
             if self.stop:  # game over: idle, wait for 'r'
