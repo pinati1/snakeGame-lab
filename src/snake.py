@@ -12,6 +12,8 @@ class Snake:
         self.head = self.segments[0]
         # The snake starts moving to the right automatically when the program starts
         self.head.setheading(RIGHT)
+        self.direction = RIGHT
+        self.next_direction = RIGHT
     def reset(self):
         """Resets the snake to its initial position."""
         for seg in self.segments:
@@ -37,34 +39,31 @@ class Snake:
 
     def move(self):
         """Moves the snake continuously by 20 pixels."""
-        # To move the snake properly, we move each segment to the position of the segment in front of it, starting from the tail.
+        # To move the nake properly, we move each segment to the position of the segment in front of it, starting from the tail.
+        self.direction = self.next_direction
         for seg_num in range(len(self.segments) - 1, 0, -1):
             new_x = self.segments[seg_num - 1].xcor()
             new_y = self.segments[seg_num - 1].ycor()
             self.segments[seg_num].goto(new_x, new_y)
-
-        # Finally, move the head forward by 20 pixels
+        self.head.setheading(self.direction)
+       # Finally, move the head forward by 20 pixels
         self.head.forward(MOVE_DISTANCE)
 
     # --- Directional Controls ---
     # Reverse movement is not allowed (e.g., if moving right, it cannot immediately move left)
 
     def up(self):
-        """Changes direction to up."""
-        if self.head.heading() != DOWN:
-            self.head.setheading(UP)
+        if self.direction != DOWN:
+            self.next_direction = UP
 
     def down(self):
-        """Changes direction to down."""
-        if self.head.heading() != UP:
-            self.head.setheading(DOWN)
+        if self.direction != UP:
+            self.next_direction = DOWN
 
     def left(self):
-        """Changes direction to left."""
-        if self.head.heading() != RIGHT:
-            self.head.setheading(LEFT)
+        if self.direction != RIGHT:
+            self.next_direction = LEFT
 
     def right(self):
-        """Changes direction to right."""
-        if self.head.heading() != LEFT:
-            self.head.setheading(RIGHT)
+        if self.direction != LEFT:
+            self.next_direction = RIGHT

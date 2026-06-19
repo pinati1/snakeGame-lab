@@ -11,8 +11,6 @@ class System:
 
 class SystemManager:
     def __init__(self):
-        # THE MAGIC TRICK: Automatically find and initialize every class
-        # that inherits from the Base 'System' class.
         self.systems = [sys_class() for sys_class in System.__subclasses__()]
 
     def update(self, game):
@@ -31,7 +29,7 @@ class EatingSystem(System):
         if game.snake.head.distance(game.food) < 15:
             game.scoreboard.increase_score()
             game.snake.grow()
-            game.pace -=SPEED_INCREMENT
+            game.pace = max(MINIMUM_SLEEP_DELAY, game.pace - SPEED_INCREMENT)
             game.food.refresh()
 
 
@@ -45,6 +43,6 @@ class BorderSystem(System):
 class SnakeCollisionSystem(System):
     def update(self, game):
         head = game.snake.head
-        for segment in game.snake.segments[2:]:  # skip [0] — that's the head itself
+        for segment in game.snake.segments[1:]:  # skip [0] — that's the head itself
             if head.distance(segment) < 15:
-                game.running = False
+                game.stop = True
