@@ -1,8 +1,13 @@
+import traceback
 import turtle
+
+from src.scoreboard import Scoreboard
 from src.settings import *
 from src.snake import Snake
 from src.food import Food
+from src.system_manager import SystemManager
 import time
+
 
 
 class Game:
@@ -14,11 +19,15 @@ class Game:
         self.screen.title("Snake")
         self.screen.tracer(0)
         self.snake = Snake()
+        self.scoreboard = Scoreboard()
         self.food = Food(self.screen)
         self.setup_bindings()
+        self.system = SystemManager()
         self.pace = STARTING_SLEEP_DELAY
 
         self.stop = False
+
+
 
     def setup_bindings(self):
         """Registers all keyboard listeners using a dictionary mapping."""
@@ -29,7 +38,8 @@ class Game:
             "Up": self.snake.up,
             "Down": self.snake.down,
             "Left": self.snake.left,
-            "Right": self.snake.right
+            "Right": self.snake.right,
+            "r" :self.reset
         }
 
         # Loop through the dictionary and bind them automatically
@@ -37,14 +47,27 @@ class Game:
             self.screen.onkey(action, key)
 
     def run(self):
-        # self.food.refresh()
-        while not self.stop:
+        while True:
             try:
-    
                 self.screen.update()
-                time.sleep(self.pace)  # Add this to slow the game down
-                self.snake.move()
-            except Exception:
-                print("window closed")
-                self.stop = True
-                break
+                time.sleep(self.pace)  # ← required sleep, kept
+            except turtle.Terminator:
+                break  # window closed → leave the loop
+
+            if self.stop:  # game over: idle, wait for 'r'
+                continue
+
+            self.system.update(self)
+
+            if self.stop:  # a system ended the game this frame
+                self.scoreboard.game_over()
+
+    def reset(self):
+        """Whole-game reset, triggered by 'r' from the game-over screen."""
+        if not self.stop:
+            return
+        self.snake.reset()
+        self.food.refresh()
+        self.scoreboard.reset()
+        self.pace = STARTING_SLEEP_DELAY
+        self.stop = False

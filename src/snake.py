@@ -12,7 +12,11 @@ class Snake:
         self.head = self.segments[0]
         # The snake starts moving to the right automatically when the program starts
         self.head.setheading(RIGHT)
-
+    def reset(self):
+        """Resets the snake to its initial position."""
+        for seg in self.segments:
+            seg.hideturtle()
+        self.__init__()
     def create_snake(self):
         """Creates the initial 3 segments of the snake."""
         for position in STARTING_POSITIONS:
