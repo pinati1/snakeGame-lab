@@ -7,7 +7,7 @@ from src.snake import Snake
 from src.food import Food
 from src.system_manager import SystemManager
 import time
-
+import tkinter
 
 
 class Game:
@@ -27,8 +27,6 @@ class Game:
 
         self.stop = False
 
-
-
     def setup_bindings(self):
         """Registers all keyboard listeners using a dictionary mapping."""
         self.screen.listen()
@@ -39,7 +37,7 @@ class Game:
             "Down": self.snake.down,
             "Left": self.snake.left,
             "Right": self.snake.right,
-            "r" :self.reset
+            "r": self.reset
         }
 
         # Loop through the dictionary and bind them automatically
@@ -47,22 +45,20 @@ class Game:
             self.screen.onkey(action, key)
 
     def run(self):
-        while True:
-            try:
-
+        try:
+            while True:
                 self.screen.update()
-                time.sleep(self.pace)  # ← required sleep, kept
-            except turtle.Terminator:
+                time.sleep(self.pace)
 
-                break  # window closed → leave the loop
+                if self.stop:
+                    continue
 
-            if self.stop:  # game over: idle, wait for 'r'
-                continue
+                self.system.update(self)
 
-            self.system.update(self)
-
-            if self.stop:  # a system ended the game this frame
-                self.scoreboard.game_over()
+                if self.stop:
+                    self.scoreboard.game_over()
+        except (turtle.Terminator, tkinter.TclError):
+            pass
 
     def reset(self):
         """Whole-game reset, triggered by 'r' from the game-over screen."""

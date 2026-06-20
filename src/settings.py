@@ -22,8 +22,8 @@ BORDER_LIMIT =288
 
 #Food point values
 POINT_SYSTEM = {
-    "apple": 1,
-    "banana": 3,
-    "cherry": 5,
+    "apple": 10,
+    "pineapple": 3,
+    "watermelon": 5,
     "poison": -2
 }
