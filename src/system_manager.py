@@ -27,7 +27,7 @@ class MovementSystem(System):
 class EatingSystem(System):
     def update(self, game):
         if game.snake.head.distance(game.food) < 15:
-            game.scoreboard.increase_score()
+            game.scoreboard.increase_score(game.food.current_points)
             game.snake.grow()
             game.pace = max(MINIMUM_SLEEP_DELAY, game.pace - SPEED_INCREMENT)
             game.food.refresh()
