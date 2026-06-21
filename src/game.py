@@ -20,18 +20,15 @@ class Game:
         self.screen.tracer(0)
         self.snake = Snake()
         self.scoreboard = Scoreboard()
-        self.food = Food(self.screen)
+        self.food = Food()
         self.setup_bindings()
         self.system = SystemManager()
         self.pace = STARTING_SLEEP_DELAY
-
         self.stop = False
 
     def setup_bindings(self):
-        """Registers all keyboard listeners using a dictionary mapping."""
         self.screen.listen()
 
-        # Map the Key string to the Function
         controls = {
             "Up": self.snake.up,
             "Down": self.snake.down,
@@ -40,7 +37,6 @@ class Game:
             "r": self.reset
         }
 
-        # Loop through the dictionary and bind them automatically
         for key, action in controls.items():
             self.screen.onkey(action, key)
 
@@ -62,11 +58,10 @@ class Game:
             pass
 
     def reset(self):
-        """Whole-game reset, triggered by 'r' from the game-over screen."""
         if not self.stop:
             return
         self.snake.reset()
-        self.food.refresh()
+        self.food.refresh(self.snake.segments)
         self.scoreboard.reset()
         self.pace = STARTING_SLEEP_DELAY
         self.stop = False

@@ -1,10 +1,8 @@
 from src.settings import *
 
 
-
 class System:
     """system interface"""
-
     def update(self, game):
         raise NotImplementedError
 
@@ -14,7 +12,6 @@ class SystemManager:
         self.systems = [sys_class() for sys_class in System.__subclasses__()]
 
     def update(self, game):
-        """Runs the update method on every dynamically loaded system."""
         for system in self.systems:
             system.update(game)
 
@@ -30,7 +27,7 @@ class EatingSystem(System):
             game.scoreboard.increase_score(game.food.current_points)
             game.snake.grow()
             game.pace = max(MINIMUM_SLEEP_DELAY, game.pace - SPEED_INCREMENT)
-            game.food.refresh()
+            game.food.refresh(game.snake.segments)
 
 
 class BorderSystem(System):
@@ -43,6 +40,6 @@ class BorderSystem(System):
 class SnakeCollisionSystem(System):
     def update(self, game):
         head = game.snake.head
-        for segment in game.snake.segments[1:]:  # skip [0] — that's the head itself
+        for segment in game.snake.segments[1:]:
             if head.distance(segment) < 15:
                 game.stop = True
