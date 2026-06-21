@@ -57,6 +57,7 @@ class Game:
 
                 if self.stop:
                     self.scoreboard.game_over()
+                    self.scoreboard.save_high_score()
         except (turtle.Terminator, tkinter.TclError):
             pass
 
