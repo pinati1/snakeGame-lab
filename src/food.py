@@ -1,7 +1,7 @@
 import glob
 import random
 from turtle import Turtle
-from src.settings import POINT_SYSTEM
+from src.settings import POINT_SYSTEM, FOOD_X_BOUND, FOOD_Y_MIN, FOOD_Y_MAX
 
 ALL_GIFS = glob.glob("assets/food_gifs/*.gif")
 
@@ -42,7 +42,7 @@ class Food(Turtle):
             self.color("red")
             self.current_points = 1
 
-        # 3. Move to a random location
-        random_x = random.randint(-280, 280)
-        random_y = random.randint(-280, 280)
+        # 3. Move to a random location inside the board, below the score display
+        random_x = random.randint(-FOOD_X_BOUND, FOOD_X_BOUND)
+        random_y = random.randint(FOOD_Y_MIN, FOOD_Y_MAX)
         self.goto(random_x, random_y)

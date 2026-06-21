@@ -3,6 +3,8 @@
 from turtle import Turtle
 from pathlib import Path
 
+from src.settings import SCORE_Y
+
 
 ALIGN = "center"
 FONT = ("Courier", 18, "bold")
@@ -23,7 +25,7 @@ class Scoreboard:
     def update_display(self):
         """Redraw the score line at the top of the board."""
         self.pen.clear()
-        self.pen.goto(0, 260)
+        self.pen.goto(0, SCORE_Y)
         self.pen.write(f"Score: {self.score}      Highest Score:{self.high_score}" , align=ALIGN, font=FONT)
 
     def increase_score(self, points=1):

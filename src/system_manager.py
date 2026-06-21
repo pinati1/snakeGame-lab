@@ -36,7 +36,7 @@ class EatingSystem(System):
 class BorderSystem(System):
     def update(self, game):
         head = game.snake.head
-        if abs(head.xcor()) > BORDER_LIMIT or abs(head.ycor()) > BORDER_LIMIT:
+        if abs(head.xcor()) > BORDER_X or abs(head.ycor()) > BORDER_Y:
             game.stop = True
 
 
