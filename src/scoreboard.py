@@ -17,6 +17,10 @@ class Scoreboard:
         self.pen.hideturtle()
         self.pen.penup()
         self.pen.color("white")
+        self.message_pen = Turtle()
+        self.message_pen.hideturtle()
+        self.message_pen.penup()
+        self.message_pen.color("white")
         self.update_display()
 
     def update_display(self):
@@ -31,14 +35,24 @@ class Scoreboard:
         self.update_display()
 
     def game_over(self):
-        self.pen.goto(0, 0)
-        self.pen.write("GAME OVER", align=ALIGN, font=GAME_OVER_FONT)
-        self.pen.goto(0, -40)
-        self.pen.write("Press 'r' to restart", align=ALIGN, font=FONT)
+        self.message_pen.goto(0, 0)
+        self.message_pen.write("GAME OVER", align=ALIGN, font=GAME_OVER_FONT)
+        self.message_pen.goto(0, -40)
+        self.message_pen.write("Press 'r' to restart", align=ALIGN, font=FONT)
+
+    def start_screen(self):
+        self.message_pen.goto(0, 0)
+        self.message_pen.write("snake", align=ALIGN, font=FONT)
+        self.message_pen.goto(0, -40)
+        self.message_pen.write("for start press 's'", align=ALIGN, font=FONT)
+
+    def clear_message(self):
+        self.message_pen.clear()
 
     def reset(self):
         self.score = 0
         self.update_display()
+        self.clear_message()
 
     def read_highest_score(self):
         if not HIGHSCORE_FILE.exists():

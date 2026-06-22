@@ -1,12 +1,13 @@
 import random
 from turtle import Turtle
-from src.settings import FOOD_OPTIONS, FOOD_X_BOUND, FOOD_Y_MIN, FOOD_Y_MAX
+from src.settings import FOOD_OPTIONS, FOOD_X_BOUND, FOOD_Y_MIN, FOOD_Y_MAX, FOOD_SHAPE_STRETCH
 
 
 class Food(Turtle):
     def __init__(self):
         super().__init__()
         self.shape("circle")
+        self.shapesize(FOOD_SHAPE_STRETCH, FOOD_SHAPE_STRETCH)
         self.penup()
         self.current_points = 1
         self.refresh()

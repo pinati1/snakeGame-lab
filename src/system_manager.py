@@ -1,5 +1,10 @@
 from src.settings import *
 
+try:
+    import winsound
+except ImportError:
+    winsound = None
+
 
 class System:
     """system interface"""
@@ -24,6 +29,8 @@ class MovementSystem(System):
 class EatingSystem(System):
     def update(self, game):
         if game.snake.head.distance(game.food) < 15:
+            if winsound is not None:
+                winsound.Beep(880, 401)
             game.scoreboard.increase_score(game.food.current_points)
             game.snake.grow()
             game.pace = max(MINIMUM_SLEEP_DELAY, game.pace - SPEED_INCREMENT)

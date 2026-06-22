@@ -1,4 +1,3 @@
-import traceback
 import turtle
 
 from src.scoreboard import Scoreboard
@@ -18,13 +17,36 @@ class Game:
         self.screen.setup(SCREEN_WIDTH, SCREEN_HEIGHT)
         self.screen.title("Snake")
         self.screen.tracer(0)
+        self.draw_border()
         self.snake = Snake()
         self.scoreboard = Scoreboard()
         self.food = Food()
+        for seg in self.snake.segments:
+            seg.hideturtle()
+        self.food.hideturtle()
         self.setup_bindings()
         self.system = SystemManager()
         self.pace = STARTING_SLEEP_DELAY
         self.stop = False
+        self.started = False
+
+    def draw_border(self):
+        inset = 10
+        half_width = SCREEN_WIDTH // 2 - inset
+        half_height = SCREEN_HEIGHT // 2 - inset
+
+        border = turtle.Turtle()
+        border.hideturtle()
+        border.color("white")
+        border.pensize(4)
+
+        border.penup()
+        border.goto(-half_width, -half_height)
+        border.pendown()
+
+        for length in (half_width * 2, half_height * 2) * 2:
+            border.forward(length)
+            border.left(90)
 
     def setup_bindings(self):
         self.screen.listen()
@@ -34,19 +56,21 @@ class Game:
             "Down": self.snake.down,
             "Left": self.snake.left,
             "Right": self.snake.right,
-            "r": self.reset
+            "r": self.reset,
+            "s": self.start
         }
 
         for key, action in controls.items():
             self.screen.onkey(action, key)
 
     def run(self):
+        self.scoreboard.start_screen()
         try:
             while True:
                 self.screen.update()
                 time.sleep(self.pace)
 
-                if self.stop:
+                if self.stop or not self.started:
                     continue
 
                 self.system.update(self)
@@ -65,3 +89,12 @@ class Game:
         self.scoreboard.reset()
         self.pace = STARTING_SLEEP_DELAY
         self.stop = False
+
+    def start(self):
+        if self.started:
+            return
+        self.scoreboard.clear_message()
+        for seg in self.snake.segments:
+            seg.showturtle()
+        self.food.showturtle()
+        self.started = True

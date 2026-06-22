@@ -32,5 +32,8 @@ FOOD_OPTIONS = [
     ("red", 1),
     ("yellow", 3),
     ("green", 5),
-    ("purple", -2),
 ]
+
+DEFAULT_SHAPE_SIZE = 20
+FOOD_SIZE = DEFAULT_SHAPE_SIZE - 3
+FOOD_SHAPE_STRETCH = FOOD_SIZE / DEFAULT_SHAPE_SIZE
