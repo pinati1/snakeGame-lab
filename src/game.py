@@ -31,22 +31,26 @@ class Game:
         self.started = False
 
     def draw_border(self):
-        inset = 10
-        half_width = SCREEN_WIDTH // 2 - inset
-        half_height = SCREEN_HEIGHT // 2 - inset
+        inset = -4
+        half_width = SCREEN_WIDTH / 2 + inset
+        half_height = SCREEN_HEIGHT /2 + inset
+        corners = {
+
+            'br': (half_width-5, -half_height+5),
+            'tr': (half_width-5, half_height),
+            'tl': (-half_width, half_height),
+            'bl': (-half_width, -half_height+5),
+        }
 
         border = turtle.Turtle()
         border.hideturtle()
         border.color("white")
-        border.pensize(4)
-
+        border.pensize(6)
         border.penup()
-        border.goto(-half_width, -half_height)
+        border.goto(corners['bl'])
         border.pendown()
-
-        for length in (half_width * 2, half_height * 2) * 2:
-            border.forward(length)
-            border.left(90)
+        for corner, point in corners.items():
+            border.goto(point)
 
     def setup_bindings(self):
         self.screen.listen()

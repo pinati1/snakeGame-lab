@@ -30,7 +30,7 @@ class EatingSystem(System):
     def update(self, game):
         if game.snake.head.distance(game.food) < 15:
             if winsound is not None:
-                winsound.Beep(880, 401)
+                winsound.Beep(880, 40)
             game.scoreboard.increase_score(game.food.current_points)
             game.snake.grow()
             game.pace = max(MINIMUM_SLEEP_DELAY, game.pace - SPEED_INCREMENT)
